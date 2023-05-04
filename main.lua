@@ -18,6 +18,10 @@ function love.load()
 end
 
 function love.update(dt)
+  Lander.velocity_y = Lander.velocity_y + (0.6 * dt)
+
+  Lander.x = Lander.x + Lander.velocity_x
+  Lander.y = Lander.y + Lander.velocity_y
 end
 
 function love.draw()
