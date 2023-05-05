@@ -7,6 +7,7 @@ Lander.Y = 0
 Lander.angle = -90
 Lander.velocity_x = 0
 Lander.velocity_y = 0
+Lander.speed = 3
 Lander.image = love.graphics.newImage('images/ship.png')
 Lander.image_engine = love.graphics.newImage('images/engine.png')
 Lander.engineOn = false
@@ -32,6 +33,14 @@ function love.update(dt)
   --engine on
   if love.keyboard.isDown("up") then
     Lander.engineOn = true
+
+    --acceleration
+    local angle_radian = math.rad(Lander.angle)
+    local x_force = math.cos(angle_radian) * (Lander.speed * dt)
+    local y_force = math.sin(angle_radian) * (Lander.speed * dt)
+    Lander.velocity_x = Lander.velocity_x + x_force
+    Lander.velocity_y = Lander.velocity_y + y_force
+    
   else 
     Lander.engineOn = false
   end
