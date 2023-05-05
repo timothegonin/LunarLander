@@ -21,7 +21,6 @@ function love.load()
 end
 
 function love.update(dt)
-  -- Lander.velocity_y = Lander.velocity_y + (0.6 * dt)
 
   --direction
   if love.keyboard.isDown("right") then
@@ -41,10 +40,28 @@ function love.update(dt)
     local x_force = math.cos(angle_radian) * (Lander.speed * dt)
     local y_force = math.sin(angle_radian) * (Lander.speed * dt)
     Lander.velocity_x = Lander.velocity_x + x_force
-    Lander.velocity_y = Lander.velocity_y + y_force
-
+    Lander.velocity_y = Lander.velocity_y + y_force    
   else 
     Lander.engineOn = false
+  end
+
+  Lander.velocity_y = Lander.velocity_y + (0.6 * dt)
+
+  --speed limit
+  if math.abs(Lander.velocity_x) > 1 then
+    if Lander.velocity_x > 0 then
+      Lander.velocity_x = 1
+    else 
+      Lander.velocity_x = -1
+    end
+  end
+
+  if math.abs(Lander.velocity_y) > 1 then
+    if Lander.velocity_y > 0 then
+      Lander.velocity_y = 1
+    else 
+      Lander.velocity_y = -1
+    end
   end
 
   Lander.x = Lander.x + Lander.velocity_x
@@ -60,5 +77,7 @@ function love.draw()
 
   local sDebug = "xxx"
   sDebug = sDebug.."angle = "..tostring(Lander.angle)
+  sDebug = sDebug.."speed_x = "..tostring(Lander.velocity_x)
+  sDebug = sDebug.."speed_y = "..tostring(Lander.velocity_y)
   love.graphics.print(sDebug,0,0)
 end
