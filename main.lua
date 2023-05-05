@@ -4,7 +4,7 @@ io.stdout:setvbuf('no')
 local Lander = {}
 Lander.x = 0
 Lander.Y = 0
-Lander.angle = -90
+Lander.angle = 270
 Lander.velocity_x = 0
 Lander.velocity_y = 0
 Lander.speed = 3
@@ -21,14 +21,16 @@ function love.load()
 end
 
 function love.update(dt)
-  --Lander.velocity_y = Lander.velocity_y + (0.6 * dt)
+  -- Lander.velocity_y = Lander.velocity_y + (0.6 * dt)
 
   --direction
   if love.keyboard.isDown("right") then
     Lander.angle = Lander.angle + (90 * dt)
+    if Lander.angle > 360 then Lander.angle = 0 end
   end
   if love.keyboard.isDown("left") then
     Lander.angle = Lander.angle - (90 * dt)
+    if Lander.angle < 0 then Lander.angle = 360 end
   end
   --engine on
   if love.keyboard.isDown("up") then
@@ -40,7 +42,7 @@ function love.update(dt)
     local y_force = math.sin(angle_radian) * (Lander.speed * dt)
     Lander.velocity_x = Lander.velocity_x + x_force
     Lander.velocity_y = Lander.velocity_y + y_force
-    
+
   else 
     Lander.engineOn = false
   end
@@ -55,4 +57,8 @@ function love.draw()
   if Lander.engineOn == true then 
     love.graphics.draw(Lander.image_engine, Lander.x, Lander.y, math.rad(Lander.angle), 1, 1, Lander.image_engine:getWidth()/2, Lander.image_engine:getHeight()/2)
   end
+
+  local sDebug = "xxx"
+  sDebug = sDebug.."angle = "..tostring(Lander.angle)
+  love.graphics.print(sDebug,0,0)
 end
