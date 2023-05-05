@@ -18,7 +18,17 @@ function love.load()
 end
 
 function love.update(dt)
-  Lander.velocity_y = Lander.velocity_y + (0.6 * dt)
+  --Lander.velocity_y = Lander.velocity_y + (0.6 * dt)
+
+  --direction
+  if love.keyboard.isDown("right") then
+    Lander.angle = Lander.angle + (90 * dt)
+  end
+  if love.keyboard.isDown("left") then
+    Lander.angle = Lander.angle - (90 * dt)
+  end
+  if love.keyboard.isDown("up") then
+  end
 
   Lander.x = Lander.x + Lander.velocity_x
   Lander.y = Lander.y + Lander.velocity_y
